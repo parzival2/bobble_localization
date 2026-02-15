@@ -1,0 +1,33 @@
+###
+# EKF configuration for BobbleBot
+# Fuses wheel odometry + IMU for state estimation
+###
+/bobble/ekf_filter_node:
+  ros__parameters:
+    frequency: 50.0
+    two_d_mode: false
+    publish_tf: true
+    print_diagnostics: true
+
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: bobble_chassis_link
+    world_frame: odom
+
+    # Wheel odometry: fuse vx and vyaw only
+    odom0: /bobble_controller/odom
+    odom0_config: [false, false, false,
+                   false, false, false,
+                   true,  false, false,
+                   false, false, false,
+                   false, false, false]
+    odom0_differential: false
+
+    # IMU: fuse orientation, angular velocity, linear acceleration
+    imu0: /bobble/imu
+    imu0_config: [false, false, false,
+                  true,  true,  true,
+                  false, false, false,
+                  true,  true,  true,
+                  false, false, false]
+    imu0_differential: false
