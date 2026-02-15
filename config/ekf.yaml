@@ -14,11 +14,13 @@
     base_link_frame: bobble_chassis_link
     world_frame: odom
 
-    # Wheel odometry: fuse vx and vyaw only
+    # Wheel odometry: fuse vx, vy, vz
+    # vy=0 and vz=0 act as zero-velocity constraints for a diff drive robot,
+    # preventing y and z position covariance from growing unbounded.
     odom0: /bobble_controller/odom
     odom0_config: [false, false, false,
                    false, false, false,
-                   true,  false, false,
+                   true,  true,  true,
                    false, false, false,
                    false, false, false]
     odom0_differential: false
